@@ -6,6 +6,7 @@ class Contract(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateField(default=timezone.now)
     client = models.ForeignKey("participants.Client", on_delete=models.PROTECT)
+    contractor = models.ForeignKey("participants.Contractor", on_delete=models.PROTECT)
 
     class Meta:
         unique_together = ["name", "date", "client"]
@@ -17,9 +18,7 @@ class Contract(models.Model):
 class Invoice(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateField(default=timezone.now)
-
     contract = models.ForeignKey("invoices.Contract", on_delete=models.PROTECT)
-    contractor = models.ForeignKey("participants.Contractor", on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name

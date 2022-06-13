@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      html,
+      body,
+      * {
+        margin: 0;
+        padding: 0;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-family: Helvetica, sans-serif;
+      }
+
+      h1,
+      h2 {
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+      }
+
+      .services {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, auto));
+        grid-column: span 2 / span 2;
+        border-right: 1px solid #d4d4d8;
+        border-top: 1px solid #d4d4d8;
+      }
+
+      .services .header {
+        text-align: center;
+      }
+
+      .services * {
+        text-align: right;
+        border-left: 1px solid #d4d4d8;
+        border-bottom: 1px solid #d4d4d8;
+        padding: 0.25rem 0.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main style="display: grid; padding: 4rem; gap: 1rem">
+      <h1 style="font-size: 1.25rem; line-height: 1.75rem">
+        {{ invoice.contract.contractor.name }}
+      </h1>
+      <h2
+        style="
+          grid-column-start: 2;
+          text-align: end;
+          font-size: 1.25rem;
+          line-height: 1.75rem;
+        "
+      >
+        INVOICE
+      </h2>
+      <div style="grid-column: span 2 / span 2">
+        <span>[Contractor]</span>
+        <div>
+          <span>INN:</span>
+          <span>{{ invoice.contract.contractor.inn }}</span>
+        </div>
+        <div>
+          <span>Registration address:</span>
+          <span>{{ invoice.contract.contractor.registration_address }}</span>
+        </div>
+        <div>
+          <span>Beneficiary bank:</span>
+          <span>{{ invoice.contract.contractor.beneficiary_bank }}</span>
+        </div>
+        <div>
+          <span>Bank address:</span>
+          <span>{{ invoice.contract.contractor.bank_address }}</span>
+        </div>
+        <div>
+          <span>SWIFT/BIC:</span>
+          <span>{{ invoice.contract.contractor.swift }}</span>
+        </div>
+        <div>
+          <span>Account</span>
+          <strong>{{ invoice.contract.contractor.account }}</strong>
+        </div>
+      </div>
+      <div style="grid-column-start: 1">
+        <div style="display: flex; flex-flow: column nowrap">
+          <strong>Bill to</strong>
+          <span style="grid-column-start: 1">
+            {{ invoice.contract.client.name }}
+          </span>
+        </div>
+        <span>[Client]</span>
+        <div>
+          <span>Registration address:</span>
+          <span>{{ invoice.contract.client.account }}</span>
+        </div>
+        <div>
+          <span>Bank details:</span>
+          <span>{{ invoice.contract.client.bank_details }}</span>
+        </div>
+        <div>
+          <span>SWIFT:</span>
+          <span>{{ invoice.contract.client.swift }}</span>
+        </div>
+        <div>
+          <span>Account</span>
+          <strong>{{ invoice.contract.client.account }}</strong>
+        </div>
+      </div>
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-auto-rows: min-content;
+          text-align: end;
+        "
+      >
+        <strong>Invoice #</strong>
+        <span>{{ invoice.name }}</span>
+        <strong>Invoice date</strong>
+        <span>{{ invoice.date }}</span>
+        <strong>Contract #</strong>
+        <span>{{ invoice.contract.name }}</span>
+        <strong>Contract date</strong>
+        <span>{{ invoice.contract.date }}</span>
+      </div>
+
+      <div class="services">
+        <span class="header">DESCRIPTION</span>
+        <span class="header">QUANTITY</span>
+        <span class="header">PRICE</span>
+        <span class="header">AMOUNT</span>
+
+        {% for service in invoice.services.all() %} {% set total = service.price
+        %}
+        <span style="text-align: left">{{ service.description }}</span>
+        <span>{{ service.quantity }}</span>
+        <span>{{ service.price }}</span>
+        <span>{{ service.amount }}</span>
+        {% endfor %}
+        <strong style="border: none; grid-column-start: 2">TOTAL</strong>
+        <strong style="grid-column: span 2 / span 2">USD {{ total }}</strong>
+      </div>
+    </main>
+  </body>
+</html>

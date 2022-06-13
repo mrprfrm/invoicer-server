@@ -1,6 +1,9 @@
 from django.urls import path
 
+from .views import invoice_view
+
 app_name = "invoices"
 
-urlpatters = [
+urlpatterns = [
+    path("<int:id>", invoice_view, name="invoice")
 ]
