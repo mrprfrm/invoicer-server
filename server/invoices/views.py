@@ -11,7 +11,7 @@ from .models import Invoice
 
 def invoice_view(request, id):
     invoices = Invoice.objects.select_related("contract").prefetch_related("services")
-    total_query = Invoice.objects.aggregate(
+    total_query = Invoice.objects.filter(id=id).aggregate(
         total=Sum(F("services__price") * F("services__amount"))
     )
     invoice = get_object_or_404(invoices, id=id)

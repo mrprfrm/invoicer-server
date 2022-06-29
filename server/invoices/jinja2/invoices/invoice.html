@@ -158,7 +158,7 @@
                     </tr>
                     <tr>
                       <th>Invoice date</th>
-                      <td>{{ invoice.date.strftime("%b %m, %Y") }}</td>
+                      <td>{{ invoice.date.strftime("%b %d, %Y") }}</td>
                     </tr>
                     <tr>
                       <th>Contract #</th>
@@ -189,7 +189,7 @@
               <td style="text-align: start">{{ service.description }}</td>
               <td>{{ service.quantity }}</td>
               <td>{{ service.price }}</td>
-              <td>{{ service.amount }}</td>
+              <td>{{ service.price }}</td>
             </tr>
             {% endfor %}
             <tr>
